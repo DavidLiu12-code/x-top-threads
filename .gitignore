@@ -1,0 +1,15 @@
+node_modules
+dist
+# dist built into docs for Pages
+.DS_Store
+*.local
+.vite
+data/raw/
+data/accum.json
+data/__pycache__/
+__pycache__/
+collect_helpers.py
+
+# keep docs/ for GitHub Pages
+!docs/
+!docs/**
