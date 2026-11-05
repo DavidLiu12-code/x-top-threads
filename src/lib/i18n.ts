@@ -7,19 +7,19 @@ export const domainLabels: Record<DomainId, { zh: string; en: string }> = {
   writing: { zh: '写作', en: 'Writing' },
   taste: { zh: '品味', en: 'Taste' },
   marketing: { zh: '营销', en: 'Marketing' },
-  'digital-marketing': { zh: '数字营销', en: 'Digital Mktg' },
+  'digital-marketing': { zh: '数字营销', en: 'Digital marketing' },
   monetization: { zh: '变现', en: 'Monetization' },
 }
 
 export const typeLabels: Record<ItemType, { zh: string; en: string }> = {
-  article: { zh: 'Article', en: 'Article' },
+  article: { zh: '长文', en: 'Article' },
   thread: { zh: '长帖', en: 'Thread' },
   post: { zh: '帖子', en: 'Post' },
 }
 
 export const sortLabels: Record<SortKey, { zh: string; en: string }> = {
-  score: { zh: '排名', en: 'Rank' },
-  newest: { zh: '最新', en: 'Newest' },
+  score: { zh: '推荐', en: 'Rank' },
+  newest: { zh: '时间', en: 'Newest' },
   impressions: { zh: '曝光', en: 'Views' },
   likes: { zh: '点赞', en: 'Likes' },
   bookmarks: { zh: '收藏', en: 'Saves' },
@@ -30,8 +30,8 @@ const dict = {
   brandMono: { zh: '/ X Top Threads', en: '/ X Top Threads' },
   search: { zh: '搜索', en: 'Search' },
   searchPlaceholder: {
-    zh: '筛选关键词',
-    en: 'Filter keywords',
+    zh: '搜索',
+    en: 'Search',
   },
   all: { zh: '全部', en: 'All' },
   allDomains: { zh: '全部', en: 'All' },
@@ -39,29 +39,29 @@ const dict = {
   sort: { zh: '排序', en: 'Sort' },
   results: { zh: '篇', en: 'articles' },
   openOnX: { zh: '在 X 打开', en: 'Open on X' },
-  items: { zh: '篇目', en: 'Articles' },
+  items: { zh: '篇目', en: 'Entries' },
   authors: { zh: '作者', en: 'Authors' },
-  articles: { zh: 'Articles', en: 'Articles' },
-  threads: { zh: 'Threads', en: 'Threads' },
+  articles: { zh: '长文', en: 'Articles' },
+  threads: { zh: '长帖', en: 'Threads' },
   themeInvert: { zh: '反色', en: 'Invert' },
   langZh: { zh: '中', en: '中' },
   langEn: { zh: 'EN', en: 'EN' },
   empty: {
-    zh: '没有匹配的篇目，试试换个筛选。',
-    en: 'No matches. Try another filter.',
+    zh: '没有匹配的篇目，试试换个筛选',
+    en: 'No matches — try another filter',
   },
-  loading: { zh: '正在整理一年的信息流…', en: 'Sorting a year of feed…' },
+  loading: { zh: '正在整理一年的信息流', en: 'Sorting a year of feed' },
   error: {
-    zh: '数据加载失败，请刷新重试。',
-    en: 'Failed to load. Please refresh.',
+    zh: '数据加载失败，请刷新重试',
+    en: 'Failed to load — please refresh',
   },
   listTitle: { zh: '全部篇目', en: 'All entries' },
-  listTitleSuffix: { zh: '，按综合排名。', en: ', ranked by score.' },
-  heroLive: { zh: 'Live Catalog', en: 'Live Catalog' },
-  splashBrand: { zh: 'Reading Room', en: 'Reading Room' },
+  listTitleSuffix: { zh: '，按综合排名', en: ', ranked by score' },
+  heroLive: { zh: '阅览窗', en: 'Reading window' },
+  splashBrand: { zh: '阅览室', en: 'Reading Room' },
   splashHint: {
     zh: '正在整理一年的信息流',
-    en: 'Sorting a year of information',
+    en: 'Sorting a year of feed',
   },
   splashCount: { zh: '已上架', en: 'Shelved' },
   method: { zh: '方法', en: 'Method' },
@@ -69,7 +69,7 @@ const dict = {
     zh: '数据来自公开 X 帖文互动 · 非官方榜单 · 阅览室',
     en: 'Public X engagement · unofficial · Reading Room',
   },
-  figLabel: { zh: 'Fig. 01 — 篇目全景', en: 'Fig. 01 — Catalog map' },
+  figLabel: { zh: '图 01 · 篇目全景', en: 'Fig. 01 · Catalog' },
 } as const
 
 export type DictKey = keyof typeof dict

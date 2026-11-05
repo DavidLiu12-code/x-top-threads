@@ -11,6 +11,7 @@ https://davidliu12-code.github.io/x-top-threads/
 - Vite + React + TypeScript + Tailwind
 - Geist / Geist Mono
 - Visual system inspired by [阅览室 · X Top 100](https://xtop100-2026.vercel.app/)
+- UI unslopped with https://github.com/heydamir/unslop (CC BY 4.0 · Damir Sokolovsky)
 
 ## Features
 

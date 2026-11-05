@@ -207,7 +207,7 @@ export default function App() {
         )}
 
         {!data && !error && (
-          <div className="mx-auto max-w-frame border-x border-border px-5 py-24 text-center font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground md:px-10">
+          <div className="mx-auto max-w-frame border-x border-border px-5 py-24 text-center font-mono text-xs text-muted-foreground md:px-10">
             {t('loading', lang)}
           </div>
         )}
@@ -215,8 +215,8 @@ export default function App() {
         {data && (
           <section className="relative border-b border-border" aria-labelledby="list-title">
             <div className="relative mx-auto max-w-frame border-x border-border">
-              <div className="flex items-end justify-between gap-4 px-5 pb-6 pt-12 md:px-10 md:pt-14">
-                <h2 id="list-title" className="text-2xl font-semibold tracking-tight md:text-3xl">
+              <div className="flex items-end justify-between gap-4 px-5 pb-6 pt-12 md:px-10 md:pt-16">
+                <h2 id="list-title" className="text-2xl font-normal tracking-tight md:text-3xl">
                   {t('listTitle', lang)}
                   <span className="text-faint">{t('listTitleSuffix', lang)}</span>
                 </h2>
@@ -264,13 +264,13 @@ export default function App() {
 
         {data && (
           <section className="border-b border-border">
-            <div className="mx-auto max-w-frame border-x border-border px-5 py-12 md:px-10 md:py-14">
-              <div className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
-                <span className="text-foreground">03</span>
+            <div className="mx-auto max-w-frame border-x border-border px-5 py-12 md:px-10 md:py-16">
+              <div className="mb-4 flex items-center gap-3 font-mono text-xs text-muted-foreground">
+                <span className="tabular-nums text-foreground">03</span>
                 <span className="h-px w-6 bg-border-strong" aria-hidden />
                 {t('method', lang)}
               </div>
-              <p className="max-w-3xl text-pretty text-sm leading-relaxed text-muted-foreground md:text-[15px]">
+              <p className="max-w-3xl text-pretty text-[15px] leading-relaxed text-muted-foreground">
                 {lang === 'zh' ? data.meta.method_zh : data.meta.method_en}
               </p>
             </div>
@@ -279,7 +279,7 @@ export default function App() {
       </main>
 
       <footer className="border-b border-border">
-        <div className="mx-auto flex max-w-frame items-center justify-between gap-4 border-x border-border px-5 py-8 font-mono text-[11px] text-muted-foreground md:px-10">
+        <div className="mx-auto flex max-w-frame items-center justify-between gap-4 border-x border-border px-5 py-8 font-mono text-xs text-muted-foreground md:px-10">
           <span>{t('footer', lang)}</span>
           <span className="tabular-nums">{windowLabel}</span>
         </div>

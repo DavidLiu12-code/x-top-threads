@@ -29,5 +29,5 @@ export function padRank(n: number): string {
 
 export function avatarUrl(handle: string, author: string): string {
   const name = encodeURIComponent(author || handle || 'X')
-  return `https://ui-avatars.com/api/?name=${name}&background=171717&color=fafafa&bold=true&size=128`
+  return `https://ui-avatars.com/api/?name=${name}&background=1c1a18&color=efe9de&bold=true&size=128`
 }

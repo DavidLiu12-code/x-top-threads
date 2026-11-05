@@ -51,42 +51,42 @@ export function Header({
   }, [searchOpen])
 
   return (
-    <header className="sticky top-0 z-40 h-14 border-b border-border bg-background/75 backdrop-blur-xl backdrop-saturate-150">
+    <header className="sticky top-0 z-40 h-14 border-b border-border bg-background/90 backdrop-blur-md">
       <div className="mx-auto grid h-full max-w-frame grid-cols-[1fr_auto_1fr] items-center px-4 md:px-6">
         <a
           href="#top"
-          className="group flex items-center gap-2.5 justify-self-start rounded-md"
+          className="flex items-center gap-2.5 justify-self-start rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground/40"
           aria-label={t('brand', lang)}
         >
-          <span className="grid size-5 grid-cols-3 gap-[2px]" aria-hidden="true">
+          <span className="grid size-4 grid-cols-3 gap-px" aria-hidden="true">
             {LOGO_OPACITY.map((op, i) => (
               <span
                 key={i}
-                className="rounded-[1px] bg-foreground transition-opacity duration-300 group-hover:opacity-100"
-                style={{ opacity: op, transitionDelay: `${i * 30}ms` }}
+                className="rounded-[1px] bg-foreground"
+                style={{ opacity: op }}
               />
             ))}
           </span>
-          <span className="text-sm font-semibold tracking-tight">{t('brand', lang)}</span>
-          <span className="hidden font-mono text-xs text-muted-foreground transition-colors group-hover:text-foreground sm:inline">
+          <span className="text-sm font-medium tracking-tight">{t('brand', lang)}</span>
+          <span className="hidden font-mono text-xs text-muted-foreground sm:inline">
             {t('brandMono', lang)}
           </span>
         </a>
 
         <nav
           aria-label="Language"
-          className="relative flex items-center rounded-full border border-border bg-background p-0.5"
+          className="relative flex items-center rounded-lg border border-border bg-background p-0.5"
         >
           <button
             type="button"
             aria-pressed={lang === 'zh'}
             onClick={() => onLang('zh')}
-            className={`relative z-10 flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors md:px-4 ${
+            className={`relative z-10 flex h-8 items-center gap-1.5 rounded-md px-3 text-xs font-medium transition-colors duration-150 ease-craft md:px-4 ${
               lang === 'zh' ? 'text-background' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             {lang === 'zh' && (
-              <span className="absolute inset-0 -z-10 rounded-full bg-foreground" />
+              <span className="absolute inset-0 -z-10 rounded-md bg-foreground" />
             )}
             <span className="font-mono">ZH</span>
             <span className="hidden sm:inline">{t('langZh', lang)}</span>
@@ -95,22 +95,23 @@ export function Header({
             type="button"
             aria-pressed={lang === 'en'}
             onClick={() => onLang('en')}
-            className={`relative z-10 flex h-8 items-center gap-1.5 rounded-full px-3 text-xs font-medium transition-colors md:px-4 ${
+            className={`relative z-10 flex h-8 items-center gap-1.5 rounded-md px-3 text-xs font-medium transition-colors duration-150 ease-craft md:px-4 ${
               lang === 'en' ? 'text-background' : 'text-muted-foreground hover:text-foreground'
             }`}
           >
             {lang === 'en' && (
-              <span className="absolute inset-0 -z-10 rounded-full bg-foreground" />
+              <span className="absolute inset-0 -z-10 rounded-md bg-foreground" />
             )}
             <span className="font-mono">EN</span>
           </button>
         </nav>
 
-        <div className="flex items-center gap-1.5 justify-self-end">
+        <div className="flex items-center gap-2 justify-self-end">
           {searchOpen ? (
             <label className="relative flex h-8 w-[min(52vw,16rem)] items-center">
               <Search
-                className="pointer-events-none absolute left-2.5 size-3.5 text-faint"
+                className="pointer-events-none absolute left-2.5 size-4 text-faint"
+                strokeWidth={1.5}
                 aria-hidden
               />
               <input
@@ -121,19 +122,19 @@ export function Header({
                   if (!query) onSearchOpen(false)
                 }}
                 placeholder={t('searchPlaceholder', lang)}
-                className="h-full w-full rounded-full border border-border bg-transparent pl-8 pr-3 text-xs outline-none transition-colors placeholder:text-faint hover:border-border-strong focus:border-foreground"
+                className="h-full w-full rounded-lg border border-border bg-transparent pl-9 pr-3 text-xs outline-none transition-colors duration-150 ease-craft placeholder:text-faint hover:border-border-strong focus:border-foreground"
               />
             </label>
           ) : (
             <button
               type="button"
-              className="flex h-8 items-center gap-2 rounded-full border border-border px-2.5 text-xs text-muted-foreground transition-colors hover:border-border-strong hover:text-foreground md:pr-1.5"
+              className="flex h-8 items-center gap-2 rounded-lg border border-border px-2.5 text-xs text-muted-foreground transition-colors duration-150 ease-craft hover:border-border-strong hover:text-foreground active:scale-[0.97] md:pr-1.5"
               aria-label={t('search', lang)}
               onClick={() => onSearchOpen(true)}
             >
-              <Search className="size-3.5" aria-hidden />
+              <Search className="size-4" strokeWidth={1.5} aria-hidden />
               <span className="hidden md:inline">{t('search', lang)}</span>
-              <kbd className="hidden h-5 items-center rounded-full border border-border bg-muted px-1.5 font-mono text-[10px] md:inline-flex">
+              <kbd className="hidden h-5 items-center rounded border border-border bg-muted px-1.5 font-mono text-[10px] text-faint md:inline-flex">
                 ⌘K
               </kbd>
             </button>
@@ -141,14 +142,14 @@ export function Header({
 
           <button
             type="button"
-            className="group relative flex size-8 items-center justify-center rounded-full border border-border transition-colors hover:border-border-strong"
+            className="flex size-8 items-center justify-center rounded-lg border border-border transition-colors duration-150 ease-craft hover:border-border-strong active:scale-[0.97]"
             aria-label={t('themeInvert', lang)}
             title={`${t('themeInvert', lang)} (I)`}
             onClick={() => onTheme(theme === 'dark' ? 'light' : 'dark')}
           >
             <span className="relative size-3.5 overflow-hidden rounded-full border border-foreground">
               <span
-                className="absolute inset-y-0 left-0 w-1/2 bg-foreground transition-transform duration-300"
+                className="absolute inset-y-0 left-0 w-1/2 bg-foreground transition-transform duration-[180ms] ease-craft"
                 style={{
                   transform: theme === 'light' ? 'translateX(100%)' : 'translateX(0)',
                 }}

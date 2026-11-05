@@ -35,9 +35,9 @@ export function CategoryBar({
   onQuery,
 }: Props) {
   return (
-    <div className="sticky top-14 z-30 border-y border-border bg-background/85 backdrop-blur-xl">
+    <div className="sticky top-14 z-30 border-y border-border bg-background/90 backdrop-blur-md">
       <div className="flex flex-col gap-3 px-5 py-3 md:px-10 lg:flex-row lg:items-center lg:justify-between">
-        <div className="-mx-5 flex items-center gap-1.5 overflow-x-auto px-5 scrollbar-none md:mx-0 md:px-0">
+        <div className="-mx-5 flex items-center gap-2 overflow-x-auto px-5 scrollbar-none md:mx-0 md:px-0">
           <Chip
             active={domain === 'all'}
             count={totalCount}
@@ -59,7 +59,7 @@ export function CategoryBar({
           <div
             role="radiogroup"
             aria-label={t('allTypes', lang)}
-            className="flex h-8 shrink-0 items-center rounded-full border border-border p-0.5"
+            className="flex h-8 shrink-0 items-center rounded-lg border border-border p-0.5"
           >
             {TYPES.map((tp) => (
               <button
@@ -68,14 +68,14 @@ export function CategoryBar({
                 role="radio"
                 aria-checked={type === tp}
                 onClick={() => onType(tp)}
-                className={`relative h-full rounded-full px-2.5 text-[11px] font-medium transition-colors ${
+                className={`relative h-full rounded-md px-2.5 text-xs font-medium transition-colors duration-150 ease-craft ${
                   type === tp
                     ? 'text-foreground'
                     : 'text-faint hover:text-muted-foreground'
                 }`}
               >
                 {type === tp && (
-                  <span className="absolute inset-0 rounded-full bg-accent" />
+                  <span className="absolute inset-0 rounded-md bg-accent" />
                 )}
                 <span className="relative">
                   {tp === 'all' ? t('allTypes', lang) : typeLabel(tp, lang)}
@@ -87,7 +87,7 @@ export function CategoryBar({
           <div
             role="radiogroup"
             aria-label={t('sort', lang)}
-            className="flex h-8 max-w-full shrink-0 items-center overflow-x-auto rounded-full border border-border p-0.5 scrollbar-none"
+            className="flex h-8 max-w-full shrink-0 items-center overflow-x-auto rounded-lg border border-border p-0.5 scrollbar-none"
           >
             {SORTS.map((s) => (
               <button
@@ -96,14 +96,14 @@ export function CategoryBar({
                 role="radio"
                 aria-checked={sort === s}
                 onClick={() => onSort(s)}
-                className={`relative h-full shrink-0 rounded-full px-2.5 text-[11px] font-medium transition-colors ${
+                className={`relative h-full shrink-0 rounded-md px-2.5 text-xs font-medium transition-colors duration-150 ease-craft ${
                   sort === s
                     ? 'text-foreground'
                     : 'text-faint hover:text-muted-foreground'
                 }`}
               >
                 {sort === s && (
-                  <span className="absolute inset-0 rounded-full bg-accent" />
+                  <span className="absolute inset-0 rounded-md bg-accent" />
                 )}
                 <span className="relative">{sortLabel(s, lang)}</span>
               </button>
@@ -113,14 +113,15 @@ export function CategoryBar({
           <label className="group relative flex h-8 min-w-0 flex-1 items-center lg:w-52 lg:flex-none">
             <span className="sr-only">{t('searchPlaceholder', lang)}</span>
             <Search
-              className="pointer-events-none absolute left-2.5 size-3.5 text-faint transition-colors group-focus-within:text-foreground"
+              className="pointer-events-none absolute left-2.5 size-4 text-faint transition-colors duration-150 ease-craft group-focus-within:text-foreground"
+              strokeWidth={1.5}
               aria-hidden
             />
             <input
               value={query}
               onChange={(e) => onQuery(e.target.value)}
               placeholder={t('searchPlaceholder', lang)}
-              className="h-full w-full rounded-full border border-border bg-transparent pl-8 pr-7 text-xs outline-none transition-colors placeholder:text-faint hover:border-border-strong focus:border-foreground"
+              className="h-full w-full rounded-lg border border-border bg-transparent pl-9 pr-3 text-xs outline-none transition-colors duration-150 ease-craft placeholder:text-faint hover:border-border-strong focus:border-foreground"
             />
           </label>
         </div>
@@ -145,7 +146,7 @@ function Chip({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`flex h-8 shrink-0 items-center gap-2 rounded-full border px-3 text-xs font-medium transition-all duration-200 active:scale-95 ${
+      className={`flex h-8 shrink-0 items-center gap-2 rounded-lg border px-3 text-xs font-medium transition-colors duration-150 ease-craft active:scale-[0.97] ${
         active
           ? 'border-foreground bg-foreground text-background'
           : 'border-border text-muted-foreground hover:border-border-strong hover:text-foreground'
@@ -153,8 +154,8 @@ function Chip({
     >
       {label}
       <span
-        className={`font-mono text-[10px] tabular-nums ${
-          active ? 'text-background/60' : 'text-faint'
+        className={`font-mono text-[11px] tabular-nums ${
+          active ? 'text-background/55' : 'text-faint'
         }`}
       >
         {count}

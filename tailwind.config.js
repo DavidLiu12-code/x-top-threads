@@ -37,26 +37,22 @@ export default {
         'border-strong': 'var(--border-strong)',
         faint: 'var(--faint)',
         accent: 'var(--accent)',
+        ember: 'var(--ember)',
       },
       maxWidth: {
         frame: '1440px',
       },
       transitionTimingFunction: {
-        'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
+        craft: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       keyframes: {
-        'pulse-ring': {
-          '0%': { transform: 'scale(1)', opacity: '0.55' },
-          '100%': { transform: 'scale(2.4)', opacity: '0' },
-        },
         'fade-up': {
-          '0%': { opacity: '0', transform: 'translateY(6px)' },
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
       },
       animation: {
-        'pulse-ring': 'pulse-ring 2s ease-out infinite',
-        'fade-up': 'fade-up 0.45s ease-out both',
+        'fade-up': 'fade-up 0.4s cubic-bezier(0.22, 1, 0.36, 1) both',
       },
     },
   },

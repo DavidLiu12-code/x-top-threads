@@ -2,30 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Warm graphite — paper, ink, night desk */
 :root {
   color-scheme: dark;
-  --background: #000000;
-  --foreground: #fafafa;
-  --card: #0a0a0a;
-  --muted: #171717;
-  --muted-foreground: #a3a3a3;
-  --border: rgba(255, 255, 255, 0.1);
-  --border-strong: rgba(255, 255, 255, 0.22);
-  --faint: #737373;
-  --accent: #262626;
+  --background: #161513;
+  --foreground: #efe9de;
+  --card: #1c1a18;
+  --muted: #262421;
+  --muted-foreground: #aaa398;
+  --border: rgba(239, 233, 222, 0.08);
+  --border-strong: rgba(239, 233, 222, 0.16);
+  --faint: #8a847a;
+  --accent: #262421;
+  --ember: #c4a574;
 }
 
 html.light {
   color-scheme: light;
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --card: #f7f7f7;
-  --muted: #f0f0f0;
-  --muted-foreground: #525252;
-  --border: rgba(0, 0, 0, 0.1);
-  --border-strong: rgba(0, 0, 0, 0.22);
-  --faint: #737373;
-  --accent: #e5e5e5;
+  --background: #f7f4ee;
+  --foreground: #1f1b16;
+  --card: #fdfbf7;
+  --muted: #efe9df;
+  --muted-foreground: #5e554a;
+  --border: rgba(31, 27, 22, 0.08);
+  --border-strong: rgba(31, 27, 22, 0.16);
+  --faint: #7b7266;
+  --accent: #efe9df;
+  --ember: #9a7340;
 }
 
 html,
@@ -40,17 +43,11 @@ body {
   color: var(--foreground);
   font-family: Geist, Geist Sans, ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'tnum' 1;
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--foreground) 18%, transparent);
-}
-
-.grid-lines {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background: color-mix(in srgb, var(--foreground) 16%, transparent);
 }
 
 .scrollbar-none::-webkit-scrollbar {

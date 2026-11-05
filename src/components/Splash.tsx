@@ -17,7 +17,7 @@ export function Splash({ lang, total, windowLabel, ready }: Props) {
 
   useEffect(() => {
     const start = performance.now()
-    const duration = 900
+    const duration = 560
     let raf = 0
     const tick = (now: number) => {
       const p = Math.min(1, (now - start) / duration)
@@ -32,8 +32,8 @@ export function Splash({ lang, total, windowLabel, ready }: Props) {
 
   useEffect(() => {
     if (!ready) return
-    const t1 = window.setTimeout(() => setHide(true), 200)
-    const t2 = window.setTimeout(() => setGone(true), 700)
+    const t1 = window.setTimeout(() => setHide(true), 120)
+    const t2 = window.setTimeout(() => setGone(true), 480)
     return () => {
       clearTimeout(t1)
       clearTimeout(t2)
@@ -48,26 +48,28 @@ export function Splash({ lang, total, windowLabel, ready }: Props) {
       aria-hidden="true"
       style={{
         clipPath: hide ? 'inset(0 0 100% 0)' : 'inset(0 0 0% 0)',
-        transition: 'clip-path 480ms cubic-bezier(0.16, 1, 0.3, 1)',
+        transition: 'clip-path 360ms cubic-bezier(0.22, 1, 0.36, 1)',
       }}
     >
-      <div className="flex items-center justify-between font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
+      <div className="flex items-center justify-between font-mono text-xs text-muted-foreground">
         <span>{t('splashBrand', lang)}</span>
-        <span>{windowLabel}</span>
+        <span className="tabular-nums">{windowLabel}</span>
       </div>
       <div className="flex items-end justify-between gap-6">
-        <div className="font-mono text-[clamp(5rem,22vw,18rem)] font-medium leading-[0.8] tracking-[-0.06em] tabular-nums">
+        <div className="font-mono text-[clamp(4.5rem,20vw,14rem)] font-medium leading-[0.85] tracking-[-0.04em] tabular-nums">
           {String(count).padStart(3, '0')}
         </div>
-        <div className="mb-3 hidden max-w-[16rem] text-right text-sm leading-relaxed text-muted-foreground md:block">
+        <div className="mb-2 hidden max-w-[14rem] text-right text-sm leading-relaxed text-muted-foreground md:block">
           {t('splashHint', lang)}
           <br />
-          {t('splashCount', lang)} {count} {lang === 'zh' ? '篇' : ''}
+          <span className="font-mono text-xs tabular-nums text-faint">
+            {t('splashCount', lang)} {count}
+          </span>
         </div>
       </div>
       <div className="relative h-px w-full overflow-hidden bg-border">
         <div
-          className="absolute inset-y-0 left-0 bg-foreground transition-[width] duration-75 linear"
+          className="absolute inset-y-0 left-0 bg-foreground"
           style={{ width: `${progress}%` }}
         />
       </div>
