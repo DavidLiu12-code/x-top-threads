@@ -10,18 +10,24 @@ export function formatDate(iso: string, lang: 'zh' | 'en'): string {
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return iso
   if (lang === 'zh') {
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
-      d.getDate(),
-    ).padStart(2, '0')}`
+    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}`
   }
-  return d.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}`
+}
+
+export function formatFullDate(iso: string): string {
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return iso
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
+    d.getDate(),
+  ).padStart(2, '0')}`
+}
+
+export function padRank(n: number): string {
+  return String(n).padStart(3, '0')
 }
 
 export function avatarUrl(handle: string, author: string): string {
   const name = encodeURIComponent(author || handle || 'X')
-  return `https://ui-avatars.com/api/?name=${name}&background=1e293b&color=93c5fd&bold=true&size=128`
+  return `https://ui-avatars.com/api/?name=${name}&background=171717&color=fafafa&bold=true&size=128`
 }

@@ -6,45 +6,57 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'Inter',
+          'Geist',
+          'Geist Sans',
           'ui-sans-serif',
           'system-ui',
           '-apple-system',
           'Segoe UI',
           'Roboto',
-          'Helvetica Neue',
-          'Arial',
           'Noto Sans SC',
           'PingFang SC',
           'Microsoft YaHei',
           'sans-serif',
         ],
+        mono: [
+          'Geist Mono',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'Consolas',
+          'monospace',
+        ],
       },
       colors: {
-        accent: {
-          DEFAULT: '#5B8CFF',
-          soft: '#8BB0FF',
-          muted: '#3A5FBF',
-        },
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: 'var(--card)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
+        border: 'var(--border)',
+        'border-strong': 'var(--border-strong)',
+        faint: 'var(--faint)',
+        accent: 'var(--accent)',
       },
-      boxShadow: {
-        card: '0 1px 0 0 rgba(255,255,255,0.04) inset, 0 8px 24px -12px rgba(0,0,0,0.45)',
-        'card-hover':
-          '0 1px 0 0 rgba(255,255,255,0.06) inset, 0 16px 40px -16px rgba(91,140,255,0.35)',
+      maxWidth: {
+        frame: '1440px',
       },
-      animation: {
-        marquee: 'marquee 40s linear infinite',
-        shimmer: 'shimmer 2.2s linear infinite',
+      transitionTimingFunction: {
+        'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',
       },
       keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
+        'pulse-ring': {
+          '0%': { transform: 'scale(1)', opacity: '0.55' },
+          '100%': { transform: 'scale(2.4)', opacity: '0' },
         },
-        shimmer: {
-          '0%': { backgroundPosition: '200% 0' },
-          '100%': { backgroundPosition: '-200% 0' },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(6px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+      },
+      animation: {
+        'pulse-ring': 'pulse-ring 2s ease-out infinite',
+        'fade-up': 'fade-up 0.45s ease-out both',
       },
     },
   },

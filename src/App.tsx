@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
+import { CategoryBar } from './components/CategoryBar'
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
-import { Marquee } from './components/Marquee'
-import { Sidebar, FilterChips } from './components/Sidebar'
-import { SortBar } from './components/SortBar'
-import { ThreadCard } from './components/ThreadCard'
+import { Splash } from './components/Splash'
+import { ThreadRow } from './components/ThreadRow'
 import { t } from './lib/i18n'
 import type {
   Catalog,
@@ -69,7 +68,7 @@ export default function App() {
   const [type, setType] = useState<ItemType | 'all'>('all')
   const [sort, setSort] = useState<SortKey>('score')
   const [query, setQuery] = useState('')
-  const [mobileFilters, setMobileFilters] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
@@ -89,7 +88,10 @@ export default function App() {
       /* ignore */
     }
     if (data) {
-      document.title = lang === 'zh' ? data.meta.title_zh : data.meta.title_en
+      document.title =
+        lang === 'zh'
+          ? `阅览室 · ${data.meta.title_zh}`
+          : `Reading Room · ${data.meta.title_en}`
     }
   }, [lang, data])
 
@@ -113,8 +115,7 @@ export default function App() {
 
   const authors = useMemo(() => {
     if (!data) return []
-    const set = new Set(data.items.map((i) => i.handle))
-    return [...set].sort()
+    return [...new Set(data.items.map((i) => i.handle))]
   }, [data])
 
   const domainCounts = useMemo(() => {
@@ -127,9 +128,11 @@ export default function App() {
   }, [data])
 
   const typeCounts = useMemo(() => {
-    const c: Record<string, number> = {}
+    const c = { article: 0, thread: 0, post: 0 }
     if (!data) return c
-    for (const item of data.items) c[item.type] = (c[item.type] || 0) + 1
+    for (const item of data.items) {
+      if (item.type in c) c[item.type as keyof typeof c] += 1
+    }
     return c
   }, [data])
 
@@ -147,6 +150,7 @@ export default function App() {
         item.text_preview,
         item.note_zh,
         item.note_en,
+        ...item.domains,
       ]
         .join(' ')
         .toLowerCase()
@@ -155,104 +159,130 @@ export default function App() {
     return sortItems(list, sort)
   }, [data, domain, type, query, sort])
 
-  const clearFilters = () => {
-    setDomain('all')
-    setType('all')
-    setQuery('')
-  }
+  const domains = (data?.meta.domains as DomainId[]) || DOMAINS
+  const itemCount = data?.meta.item_count || data?.items.length || 0
+  const windowLabel = data
+    ? `${data.meta.window_start.slice(0, 7).replace('-', '.')} — ${data.meta.window_end
+        .slice(0, 7)
+        .replace('-', '.')}`
+    : ''
 
   return (
-    <div id="top" className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+    <div id="top" className="min-h-screen bg-background text-foreground">
+      <Splash
+        lang={lang}
+        total={itemCount || 105}
+        windowLabel={windowLabel || '2025.11 — 2026.11'}
+        ready={!!data || error}
+      />
+
       <Header
         lang={lang}
         theme={theme}
+        query={query}
+        searchOpen={searchOpen}
         onLang={setLang}
         onTheme={setTheme}
+        onQuery={setQuery}
+        onSearchOpen={setSearchOpen}
       />
 
       {data && (
-        <>
-          <Hero
-            meta={data.meta}
-            lang={lang}
-            itemCount={data.meta.item_count || data.items.length}
-            authorCount={authors.length}
-            domainCount={(data.meta.domains || DOMAINS).length}
-          />
-          <Marquee
-            domains={(data.meta.domains as DomainId[]) || DOMAINS}
-            authors={authors}
-            lang={lang}
-          />
-        </>
+        <Hero
+          meta={data.meta}
+          lang={lang}
+          itemCount={itemCount}
+          authorCount={authors.length}
+          articleCount={typeCounts.article}
+          threadCount={typeCounts.thread + typeCounts.post}
+          domains={domains}
+        />
       )}
 
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main>
         {error && (
-          <div className="rounded-2xl border border-red-500/30 bg-red-500/10 px-4 py-6 text-sm text-red-300">
+          <div className="mx-auto max-w-frame border-x border-border px-5 py-16 text-center text-sm text-muted-foreground md:px-10">
             {t('error', lang)}
           </div>
         )}
 
         {!data && !error && (
-          <div className="py-20 text-center text-sm text-[var(--muted)]">
+          <div className="mx-auto max-w-frame border-x border-border px-5 py-24 text-center font-mono text-xs uppercase tracking-[0.18em] text-muted-foreground md:px-10">
             {t('loading', lang)}
           </div>
         )}
 
         {data && (
-          <div className="flex gap-8">
-            <Sidebar
-              lang={lang}
-              domains={(data.meta.domains as DomainId[]) || DOMAINS}
-              domain={domain}
-              type={type}
-              counts={{ domain: { ...domainCounts, __all: data.items.length }, type: typeCounts }}
-              onDomain={setDomain}
-              onType={setType}
-              onClear={clearFilters}
-              mobileOpen={mobileFilters}
-              onCloseMobile={() => setMobileFilters(false)}
-            />
+          <section className="relative border-b border-border" aria-labelledby="list-title">
+            <div className="relative mx-auto max-w-frame border-x border-border">
+              <div className="flex items-end justify-between gap-4 px-5 pb-6 pt-12 md:px-10 md:pt-14">
+                <h2 id="list-title" className="text-2xl font-semibold tracking-tight md:text-3xl">
+                  {t('listTitle', lang)}
+                  <span className="text-faint">{t('listTitleSuffix', lang)}</span>
+                </h2>
+                <div className="font-mono text-xs tabular-nums text-muted-foreground">
+                  {filtered.length}
+                  <span className="text-faint"> / {itemCount}</span>
+                </div>
+              </div>
 
-            <div className="min-w-0 flex-1 space-y-5">
-              <FilterChips
+              <CategoryBar
                 lang={lang}
-                domains={(data.meta.domains as DomainId[]) || DOMAINS}
+                domains={domains}
                 domain={domain}
                 type={type}
-                onDomain={setDomain}
-                onType={setType}
-                onOpenMore={() => setMobileFilters(true)}
-              />
-
-              <SortBar
-                lang={lang}
                 sort={sort}
                 query={query}
-                resultCount={filtered.length}
+                totalCount={data.items.length}
+                domainCounts={domainCounts}
+                onDomain={setDomain}
+                onType={setType}
                 onSort={setSort}
                 onQuery={setQuery}
               />
 
               {filtered.length === 0 ? (
-                <div className="hairline rounded-2xl bg-[var(--bg-card)] px-6 py-16 text-center text-sm text-[var(--muted)]">
+                <div className="px-5 py-20 text-center text-sm text-muted-foreground md:px-10">
                   {t('empty', lang)}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <div role="list" aria-label={lang === 'zh' ? '文章列表' : 'Article list'}>
                   {filtered.map((item, i) => (
-                    <ThreadCard key={item.id} item={item} lang={lang} index={i} />
+                    <ThreadRow
+                      key={item.id}
+                      item={item}
+                      lang={lang}
+                      rank={i + 1}
+                      index={i}
+                    />
                   ))}
                 </div>
               )}
             </div>
-          </div>
+          </section>
+        )}
+
+        {data && (
+          <section className="border-b border-border">
+            <div className="mx-auto max-w-frame border-x border-border px-5 py-12 md:px-10 md:py-14">
+              <div className="mb-4 flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.16em] text-muted-foreground">
+                <span className="text-foreground">03</span>
+                <span className="h-px w-6 bg-border-strong" aria-hidden />
+                {t('method', lang)}
+              </div>
+              <p className="max-w-3xl text-pretty text-sm leading-relaxed text-muted-foreground md:text-[15px]">
+                {lang === 'zh' ? data.meta.method_zh : data.meta.method_en}
+              </p>
+            </div>
+          </section>
         )}
       </main>
 
-      <footer className="border-t border-[var(--border)] py-8 text-center text-xs text-[var(--muted)]">
-        {t('footer', lang)}
+      <footer className="border-b border-border">
+        <div className="mx-auto flex max-w-frame items-center justify-between gap-4 border-x border-border px-5 py-8 font-mono text-[11px] text-muted-foreground md:px-10">
+          <span>{t('footer', lang)}</span>
+          <span className="tabular-nums">{windowLabel}</span>
+        </div>
       </footer>
     </div>
   )
